@@ -20,3 +20,16 @@ def add_task(request):
     else:
         form = TodoForm()
     return render(request, 'tasks/add_task.html', {'form': form})
+
+
+def delete_task(request, task_id):
+    task = TodoItem.objects.get(id=task_id)
+    task.delete()
+    return redirect('index')
+
+
+def toggle_task(request, task_id):
+    task = TodoItem.objects.get(id=task_id)
+    task.completed = not task.completed
+    task.save()
+    return redirect('index')
